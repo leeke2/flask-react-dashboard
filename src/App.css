@@ -1,0 +1,115 @@
+@import "fonts/Roboto.css";
+@import "fonts/Roboto Slab.css";
+
+
+body {
+  background: #edf2f5;
+  color:  #333333;
+  font-family:  "Roboto";
+}
+
+#root, .modal-body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.Line-chart svg {
+  background:  white;
+  box-shadow: 2px 2px 10px 0px rgba(100, 100, 100, 0.1);
+  border-radius:  1em;
+}
+
+.area {             
+    fill: url(#area-gradient);          
+    stroke-width: 0px;      
+}
+
+.Line-chart-label {
+  text-transform: uppercase;
+  font-weight:  bold;
+  font-size:  0.8em;
+  fill:  #666666 !important;
+}
+
+.Line-chart-value {
+  font-family: 'Roboto Slab', sans-serif;
+  font-size:  4em;
+  font-weight:  500;
+}
+
+.Line-chart-unit {
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight:  500;
+}
+
+.row {
+  clear: both;
+}
+
+.Slider-row {
+  justify-content: center;
+}
+
+.Slider {
+  width:  150px;
+  height:  500px;
+  clip-path:  inset(0% 0% 0% 0% round 1em);
+  background: #e7e6eb;
+  position: relative;
+  text-align: center;
+}
+
+/*.Slider-container {
+  flex: 0 !important;
+}*/
+
+.Control-container {
+  flex: 0 !important;
+  text-align: center;
+}
+
+.Control-image {
+  width: 40px;
+  opacity: 0.8;
+}
+
+.Control-description {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-top: 0.5em;
+  margin-bottom: 2em;
+}
+
+.Slider-inner {
+  width:  100%;
+  background: #399af7;
+  position: absolute;
+  bottom: 0;
+}
+
+.Slider span {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  position: absolute;
+  bottom: 1em;
+  display: block;
+  width: 100%;
+}
+
+.modal, .modal-fullscreen {
+  background: #edf2f5;
+}
+
+.Close-button {
+  display: block;
+  float: right;
+  width: 3em;
+  height: 3em;
+  position: absolute;
+  right: 2em;
+  top: 2em;
+  opacity: 0.5;
+}
