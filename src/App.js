@@ -14,15 +14,15 @@ function App() {
     } else {
       const selectedBlock = e.currentTarget.children[0].getAttribute('block-id');
 
-      const val = devices.current.reduce((obj, item) => {
-        obj[item.id] = (devicesList[selectedBlock].includes(item.id)) ? true : false;
-        return obj;
-      }, {});
-      console.log(devicesList);
-      console.log(val);
-      setShowDevice(val);
+      if (devicesList[selectedBlock].length != 0) {
+        const val = devices.current.reduce((obj, item) => {
+          obj[item.id] = (devicesList[selectedBlock].includes(item.id)) ? true : false;
+          return obj;
+        }, {});
 
-      setShowModal(true);
+        setShowDevice(val);
+        setShowModal(true);
+      }
     }
   }
 
@@ -50,15 +50,13 @@ function App() {
         'id': 'temperature',
         'columns': 9,
         'dataSource': '/temperature',
-        'refreshInterval': 1,
-        'devices': ['p1', 'p2']
+        'devices': ['p1', 'p2'],
       },
       {
         'id': 'pm25',
         'columns': 3,
         'dataSource': '/pm25',
-        'refreshInterval': 1,
-        'devices': ['f1', 'p2']
+        'devices': ['f1', 'p1', 'p2'],
       }
     ],
     [
@@ -66,15 +64,13 @@ function App() {
         'id': 'temperature_2',
         'columns': 5,
         'dataSource': '/temperature',
-        'refreshInterval': 4,
-        'devices': ['f1', 'p1', 'p2']
+        'theme': 'green'
       },
       {
         'id': 'pm25_2',
         'columns': 7,
         'dataSource': '/pm25',
-        'refreshInterval': 5,
-        'devices': ['f1']
+        'theme': 'purple'
       }
     ]
   ]);
@@ -82,10 +78,23 @@ function App() {
   const devicesList = blocks.current.reduce((obj, item) => {
     return obj.concat(item);
   }).reduce((obj, item) => {
-    obj[item.id] = item.devices;
+    if ("devices" in item) {
+      obj[item.id] = item.devices;  
+    } else {
+      obj[item.id] = [];
+    }
+    
     return obj;
   }, {});
 
+  const objToAttributes = (obj, exclude=[]) => {
+    return Object.keys(obj)
+      .filter(key => !exclude.includes(key))
+      .reduce((out, key) => {
+        out[key] = obj[key];
+        return out
+      }, {});
+  };
 
   const [ showModal, setShowModal ] = useState(false);
   const [ showDevice, setShowDevice ] = useState(devices.current.reduce((obj, item) => {
@@ -99,9 +108,10 @@ function App() {
         const m = (i === 0) ? "mt-0" : "mt-4";
         return (<Row className={m}>
           {row.map((item) => {
+            // console.log(objToAttributes(item, ['columns']));
             return (
             <Col xs={item.columns} onClick={toggleModal}>
-              <LineChart id={item.id} dataSource={item.dataSource} refreshInterval={item.refreshInterval}/>
+              <LineChart {...(objToAttributes(item, ['columns']))} />
             </Col>)
           })}
         </Row>)
